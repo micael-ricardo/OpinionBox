@@ -18,6 +18,6 @@ try {
     header('Location: ../public/Listar.php?message=' . urlencode('Cadastrado com sucesso'));
     exit();
 } catch (Exception $e) {
-    header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage()));
+    header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage()). '&nome=' . urlencode($nome) . '&cpf=' . urlencode($cpf));
     exit();
 }
