@@ -11,14 +11,14 @@ class ClienteDAO
         $this->conexao = (new Conexao())->getConexao();
     }
 
-    public function getAllUsers(): array
+    public function getAllClientes(): array
     {
         $stmt = $this->conexao->prepare("SELECT * FROM cliente");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insertUser($nome, $cpf)
+    public function insertClientes($nome, $cpf)
     {
         if (empty($nome)) {
             throw new InvalidArgumentException('Nome inválido');

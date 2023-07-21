@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../../dao/ClienteDAO.php';
 
-class InsertCliente
+class ListClientes
 {
     private $ClienteDAO;
 
@@ -11,8 +11,8 @@ class InsertCliente
         $this->ClienteDAO = new ClienteDAO();
     }
 
-    public function insertClientes($nome, $cpf)
+    public function getAllClientes()
     {
-        $this->ClienteDAO->insertClientes($nome, $cpf);
+        return $this->ClienteDAO->getAllClientes();
     }
 }
