@@ -11,8 +11,8 @@ class InsertCliente
         $this->ClienteDAO = new ClienteDAO();
     }
 
-    public function insertClientes($nome, $cpf)
+    public function insertClientes($nome, $cpf, $cep, $estado, $cidade, $bairro, $rua, $numero)
     {
-        $this->ClienteDAO->insertClientes($nome, $cpf);
+        $this->ClienteDAO->insertClientes($nome, $cpf, $cep, $estado, $cidade, $bairro, $rua, $numero);
     }
 }

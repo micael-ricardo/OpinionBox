@@ -18,7 +18,7 @@ class ClienteDAO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insertClientes($nome, $cpf)
+    public function insertClientes($nome, $cpf, $cep, $estado, $cidade, $bairro, $rua, $numero)
     {
         if (empty($nome)) {
             throw new InvalidArgumentException('Nome inválido');
@@ -33,11 +33,35 @@ class ClienteDAO
             $stmt->bindParam(':nome', $nome);
             $stmt->bindParam(':cpf', $cpf);
             $stmt->execute();
+
+            $id_cliente = $this->conexao->lastInsertId();
+
+            $stmt = $this->conexao->prepare("INSERT INTO bairros (nome_bairro) VALUES (:bairro)");
+            $stmt->bindParam(':bairro', $bairro);
+            $stmt->execute();
+
+            $id_bairro = $this->conexao->lastInsertId();
+
+            $stmt = $this->conexao->prepare("INSERT INTO ceps (id_bairro, cep) VALUES (:id_bairro, :cep)");
+            $stmt->bindParam(':id_bairro', $id_bairro);
+            $stmt->bindParam(':cep', $cep);
+            $stmt->execute();
+
+            $id_cep = $this->conexao->lastInsertId();
+
+            $stmt = $this->conexao->prepare("INSERT INTO enderecos (id_cliente, id_cep, rua, numero, cidade, estado) VALUES (:id_cliente, :id_cep, :rua, :numero, :cidade, :estado)");
+            $stmt->bindParam(':id_cliente', $id_cliente);
+            $stmt->bindParam(':id_cep', $id_cep);
+            $stmt->bindParam(':rua', $rua);
+            $stmt->bindParam(':numero', $numero);
+            $stmt->bindParam(':cidade', $cidade);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->execute();
             $this->conexao->commit();
+
         } catch (Exception $e) {
             $this->conexao->rollBack();
             throw new Exception('Erro ao inserir cliente: ' . $e->getMessage());
         }
     }
-
 }
