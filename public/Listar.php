@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 require_once __DIR__ . '/../services/cliente/ListClientes.php';
 
@@ -12,3 +13,6 @@ $clientes = $listClientes->getAllClientes();
 foreach ($clientes as $cliente) {
     echo $cliente['Nome'] . ' - ' . $cliente['Documento'] . '<br>';
 }
+
+$conteudo = ob_get_clean();
+include 'template/layout.php';

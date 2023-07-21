@@ -1,8 +1,6 @@
 <?php
 ob_start();
-?>
 
-<?php
 if (isset($_GET['error'])) {
     echo '<p>' . htmlspecialchars(urldecode($_GET['error'])) . '</p>';
 }
