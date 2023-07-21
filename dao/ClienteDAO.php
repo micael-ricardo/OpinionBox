@@ -1,7 +1,8 @@
 <?php
-require_once 'Conexao.php';
+require_once '../config/Conexao.php';
+require_once '../utils/Util.php';
 
-class Cliente
+class ClienteDAO
 {
     private $conexao;
 

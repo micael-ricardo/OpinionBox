@@ -4,7 +4,7 @@
     <title>Inserir Cliente</title>
 </head>
 <body>
-    <form action="ClienteController.php" method="post">
+    <form action="../controllers/ClienteController.php" method="post">
         <label for="nome">Nome:</label><br>
         <input type="text" id="nome" name="nome"><br>
         <label for="cpf">CPF:</label><br>
