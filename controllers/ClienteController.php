@@ -2,7 +2,8 @@
 require_once __DIR__ . '/../services/cliente/InsertCliente.php';
 require_once __DIR__ . '/../services/cliente/ListClientes.php';
 
-function validarDados($dados) {
+function validarDados($dados)
+{
     $erros = [];
 
     if (empty($dados['nome'])) {
@@ -10,13 +11,21 @@ function validarDados($dados) {
     }
 
     if (empty($dados['cpf'])) {
-        $erros[] = 'CPF é obrigatório e deve ser numérico';
+        $erros[] = 'CPF é obrigatório';
     }
+    if (empty($dados['cep'])) {
+        $erros[] = 'CEP é obrigatório';
+    }
+    if (empty($dados['numero']) || !is_numeric($dados['numero'])) {
+        $erros[] = 'Número é obrigatório e deve ser númerico';
+    }
+
 
     return $erros;
 }
 
-function tratarDados($dados) {
+function tratarDados($dados)
+{
     $dadosTratados = [];
 
     $dadosTratados['nome'] = $dados['nome'];
@@ -34,7 +43,11 @@ function tratarDados($dados) {
 $erros = validarDados($_POST);
 
 if (!empty($erros)) {
-    header('Location: ../public/Cadastro.php?error=' . urlencode(implode(', ', $erros)));
+    header('Location: ../public/Cadastro.php?error=' . urlencode(implode(', ', $erros))
+        . '&nome=' . urlencode($_POST['nome']) . '&cpf=' . urlencode($_POST['cpf'])
+        . '&cep=' . urlencode($_POST['cep']) . '&estado=' . urlencode($_POST['estado'])
+        . '&cidade=' . urlencode($_POST['cidade']) . '&bairro=' . urlencode($_POST['bairro'])
+        . '&rua=' . urlencode($_POST['rua']) . '&numero=' . urlencode($_POST['numero']));
     exit();
 }
 
@@ -47,6 +60,10 @@ try {
     header('Location: ../public/Listar.php?message=' . urlencode('Cadastrado com sucesso'));
     exit();
 } catch (Exception $e) {
-    header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage()) . '&nome=' . urlencode($nome) . '&cpf=' . urlencode($cpf));
+    header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage())
+        . '&nome=' . urlencode($_POST['nome']) . '&cpf=' . urlencode($_POST['cpf'])
+        . '&cep=' . urlencode($_POST['cep']) . '&estado=' . urlencode($_POST['estado'])
+        . '&cidade=' . urlencode($_POST['cidade']) . '&bairro=' . urlencode($_POST['bairro'])
+        . '&rua=' . urlencode($_POST['rua']) . '&numero=' . urlencode($_POST['numero']));
     exit();
 }

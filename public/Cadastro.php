@@ -19,38 +19,38 @@ if (isset($_GET['error'])) {
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Cep">Cep:</label>
-                <input type="text" class="form-control" name="cep" id="cep">
+                <input type="text" class="form-control" name="cep" id="cep" required value="<?php echo isset($_GET['cep']) ? htmlspecialchars(urldecode($_GET['cep'])) : ''; ?>">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Estado">Estado:</label>
-                <input type="text" class="form-control" name="estado" id="estado">
+                <input type="text" class="form-control" name="estado" id="estado" required value="<?php echo isset($_GET['estado']) ? htmlspecialchars(urldecode($_GET['estado'])) : ''; ?>">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Cidadde">Cidade:</label>
-                <input type="text" class="form-control" name="cidade" id="cidade">
+                <input type="text" class="form-control" name="cidade" id="cidade" required value="<?php echo isset($_GET['cidade']) ? htmlspecialchars(urldecode($_GET['cidade'])) : ''; ?>">
             </div>
         </div>
 
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Bairro">Bairro:</label>
-                <input type="text" class="form-control" name="bairro" id="bairro">
+                <input type="text" class="form-control" name="bairro" id="bairro" required value="<?php echo isset($_GET['bairro']) ? htmlspecialchars(urldecode($_GET['bairro'])) : ''; ?>">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Rua">Rua:</label>
-                <input type="text" class="form-control" name="rua" id="rua">
+                <input type="text" class="form-control" name="rua" id="rua" required value="<?php echo isset($_GET['rua']) ? htmlspecialchars(urldecode($_GET['rua'])) : ''; ?>">
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label for="Numero">Número</label>
-                <input type="text" class="form-control" name="numero" id="numero">
+                <input type="text" class="form-control" name="numero" id="numero" required value="<?php echo isset($_GET['numero']) ? htmlspecialchars(urldecode($_GET['numero'])) : ''; ?>">
             </div>
         </div>
     </div>
@@ -68,40 +68,4 @@ $conteudo = ob_get_clean();
 include 'template/layout.php';
 ?>
 
-<script>
-
-//Mascara
-$(document).ready(function () {
-    $('#cpf').inputmask('999.999.999-99');
-    $("#cep").inputmask("99.999-999");
-});
-
-
-$(document).ready(function () {
-
-$("#cep").on("change", function () {
-    let cep = $(this).val().replace(/\D/g, '');
-    console.log(cep)
-    let url = `https://viacep.com.br/ws/${cep}/json/`;
-
-    $.get(url, function (dados) {
-        if (dados.erro) {
-            alert("CEP não encontrado!");
-        } else {
-            exibirEndereco(dados);
-        }
-    })
-        .fail(function () {
-            alert("Erro ao buscar CEP!");
-        });
-});
-});
-function exibirEndereco(endereco) {
-
-$("#bairro").val(endereco.bairro);
-$("#rua").val(endereco.logradouro);
-$("#cidade").val(endereco.localidade);
-$("#estado").val(endereco.uf);
-}
-
-</script>
+<script src="../public/js/cliente.js"></script>
