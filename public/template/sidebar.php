@@ -6,8 +6,8 @@
                 <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start text-white"
                     id="menu">
                         <li>
-                            <a href="#" class="nav-link px-0 align-middle">
-                                <i class="fs-4 bi bi-map"></i><span class="ms-1  d-sm-inline"> Clientes</span></a>
+                            <a  href="../public/listar.php" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi bi-people-fill"></i><span class="ms-1  d-sm-inline"> Clientes</span></a>
                         </li>
                 </ul>
                 <hr>
