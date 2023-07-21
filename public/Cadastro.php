@@ -6,17 +6,52 @@ if (isset($_GET['error'])) {
 }
 ?>
 
-
-
 <form action="../controllers/ClienteController.php" method="post">
     <div class="row mt-4">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <label for="nome">Nome:</label>
             <input type="text" class="form-control" name="nome" id="nome" required value="<?php echo isset($_GET['nome']) ? htmlspecialchars(urldecode($_GET['nome'])) : ''; ?>">
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <label for="cpf">CPF:</label>
             <input type="text" class="form-control" name="cpf" id="cpf" required value="<?php echo isset($_GET['cpf']) ? htmlspecialchars(urldecode($_GET['cpf'])) : ''; ?>">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Cep">Cep:</label>
+                <input type="text" class="form-control" name="cep" id="cep">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Estado">Estado:</label>
+                <input type="text" class="form-control" name="estado" id="estado">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Cidadde">Cidade:</label>
+                <input type="text" class="form-control" name="cidade" id="cidade">
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Bairro">Bairro:</label>
+                <input type="text" class="form-control" name="bairro" id="bairro">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Rua">Rua:</label>
+                <input type="text" class="form-control" name="rua" id="rua">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Numero">Número</label>
+                <input type="text" class="form-control" name="numero" id="numero">
+            </div>
         </div>
     </div>
 

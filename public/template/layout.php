@@ -17,12 +17,12 @@
 
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
     <?php
     include 'header.php';
     include 'sidebar.php';
     ?>
-    <div class="container">
+    <div class="container col py-3">
         <?php echo $conteudo; ?>
     </div>
 
