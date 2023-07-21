@@ -20,7 +20,8 @@ $listClientes = new ListClientes();
 $clientes = $listClientes->getAllClientes();
 
 foreach ($clientes as $cliente) {
-    echo $cliente['Nome'] . ' - ' . $cliente['Documento'] . '<br>';
+    // var_dump($cliente);
+    echo $cliente['nome'] . ' - ' . $cliente['cpf'] . '<br>';
 }
 
 $conteudo = ob_get_clean();

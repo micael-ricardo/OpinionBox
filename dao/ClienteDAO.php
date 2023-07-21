@@ -13,7 +13,7 @@ class ClienteDAO
 
     public function getAllClientes(): array
     {
-        $stmt = $this->conexao->prepare("SELECT * FROM cliente");
+        $stmt = $this->conexao->prepare("SELECT * FROM clientes");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -29,7 +29,7 @@ class ClienteDAO
 
         try {
             $this->conexao->beginTransaction();
-            $stmt = $this->conexao->prepare("INSERT INTO cliente (Nome, Documento) VALUES (:nome, :cpf)");
+            $stmt = $this->conexao->prepare("INSERT INTO clientes (nome, cpf) VALUES (:nome, :cpf)");
             $stmt->bindParam(':nome', $nome);
             $stmt->bindParam(':cpf', $cpf);
             $stmt->execute();
