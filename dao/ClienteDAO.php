@@ -128,16 +128,16 @@ class ClienteDAO
 
     public function deleteCliente($id)
     {
-      try {
-        $this->conexao->beginTransaction();
-        $stmt = $this->conexao->prepare("DELETE FROM clientes WHERE id = :id");
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        $this->conexao->commit();
-      } catch (Exception $e) {
-        $this->conexao->rollBack();
-        throw new Exception('Erro ao deletar usuário: ' . $e->getMessage());
-      }
+        try {
+            $this->conexao->beginTransaction();
+            $stmt = $this->conexao->prepare("DELETE FROM clientes WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            $this->conexao->commit();
+        } catch (Exception $e) {
+            $this->conexao->rollBack();
+            throw new Exception('Erro ao deletar usuário: ' . $e->getMessage());
+        }
     }
 
     public function cepBairro(): array
@@ -150,6 +150,14 @@ class ClienteDAO
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
-
+    public function bairroCep(): array
+    {
+        $stmt = $this->conexao->prepare("SELECT b.nome_bairro, COUNT(ce.id) AS quantidade_ceps
+        FROM bairros b
+        JOIN ceps ce ON b.id = ce.id_bairro
+        GROUP BY b.nome_bairro
+        HAVING COUNT(ce.id) > 1;");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
