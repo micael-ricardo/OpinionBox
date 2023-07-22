@@ -37,9 +37,8 @@ $clientes = $listClientes->getAllClientes();
                 <td><?php echo htmlspecialchars($cliente['cpf']); ?></td>
                 <td><?php echo htmlspecialchars($cliente['cep']); ?></td>
                 <td>
-
-                    <a href="Cadastro.php?id=<?php echo $cliente['id']; ?>" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
-                    <button type="button" data-bs-target="#ModalDeletar" data-bs-toggle="modal" data-id="<?php echo $cliente['id']; ?>" data-nome="<?php echo $cliente['nome']; ?>" class="btn btn-danger btn-sm excluir"><i class="bi bi-trash"></i></button>
+                    <a title="Editar" href="Cadastro.php?id=<?php echo $cliente['id']; ?>" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
+                    <button title="Excluir" type="button" data-bs-target="#ModalDeletar" data-bs-toggle="modal" data-id="<?php echo $cliente['id']; ?>" data-nome="<?php echo $cliente['nome']; ?>" class="btn btn-danger btn-sm excluir"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
         <?php endforeach; ?>
