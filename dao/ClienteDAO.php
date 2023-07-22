@@ -14,14 +14,14 @@ class ClienteDAO
     public function getAllClientes(): array
     {
 
-        $stmt = $this->conexao->prepare("SELECT c.id, c.nome, c.cpf, ce.cep, e.rua, e.numero, e.cidade, e.estado
+        $stmt = $this->conexao->prepare("SELECT c.id, c.nome, c.cpf, ce.cep, e.rua, e.numero, e.cidade, e.estado, b.nome_bairro
         FROM clientes c
         JOIN enderecos e ON c.id = e.id_cliente
-        JOIN ceps ce ON e.id_cep = ce.id;");
+        JOIN ceps ce ON e.id_cep = ce.id
+        JOIN bairros b ON ce.id_bairro = b.id;");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function insertClientes($nome, $cpf, $cep, $estado, $cidade, $bairro, $rua, $numero)
     {
         if (empty($nome)) {
@@ -67,4 +67,18 @@ class ClienteDAO
             throw new Exception('Erro ao inserir cliente: ' . $e->getMessage());
         }
     }
+
+    public function getClienteById($id)
+    {
+        $stmt = $this->conexao->prepare("SELECT c.id, c.nome, c.cpf, ce.cep, e.rua, e.numero, e.cidade, e.estado, b.nome_bairro
+        FROM clientes c
+        JOIN enderecos e ON c.id = e.id_cliente
+        JOIN ceps ce ON e.id_cep = ce.id
+        JOIN bairros b ON ce.id_bairro = b.id
+        WHERE c.id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
