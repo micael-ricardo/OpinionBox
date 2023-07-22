@@ -81,4 +81,48 @@ class ClienteDAO
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function updateCliente($id, $nome, $cpf, $cep, $estado, $cidade, $bairro, $rua, $numero)
+    {
+        if (empty($nome)) {
+            throw new InvalidArgumentException('Nome inválido');
+        }
+        if (!Util::validaCPF($cpf)) {
+            throw new InvalidArgumentException("CPF inválido");
+        }
+
+        try {
+            $this->conexao->beginTransaction();
+
+            $stmt = $this->conexao->prepare("UPDATE clientes SET nome = :nome, cpf = :cpf WHERE id = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':nome', $nome);
+            $stmt->bindParam(':cpf', $cpf);
+            $stmt->execute();
+
+            $stmt = $this->conexao->prepare("UPDATE bairros b SET b.nome_bairro = :bairro 
+            WHERE b.id = (SELECT ceps.id_bairro FROM enderecos  INNER JOIN ceps 
+            ON enderecos.id_cep = ceps.id WHERE enderecos.id_cliente = :id)");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':bairro', $bairro);
+            $stmt->execute();
+
+            $stmt = $this->conexao->prepare("UPDATE ceps SET cep = :cep WHERE id = (SELECT id_cep FROM enderecos WHERE id_cliente = :id)");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':cep', $cep);
+            $stmt->execute();
+
+            $stmt = $this->conexao->prepare("UPDATE enderecos SET rua = :rua, numero = :numero, cidade = :cidade, estado = :estado WHERE id_cliente = :id");
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':rua', $rua);
+            $stmt->bindParam(':numero', $numero);
+            $stmt->bindParam(':cidade', $cidade);
+            $stmt->bindParam(':estado', $estado);
+            $stmt->execute();
+
+            $this->conexao->commit();
+        } catch (Exception $e) {
+            $this->conexao->rollBack();
+            throw new Exception('Erro ao atualizar cliente: ' . $e->getMessage());
+        }
+    }
 }

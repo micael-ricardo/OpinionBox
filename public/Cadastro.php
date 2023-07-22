@@ -23,6 +23,7 @@ if (isset($_GET['id'])) {
 <form action="../controllers/ClienteController.php" method="post">
     <div class="row mt-4">
         <div class="form-group col-md-6">
+            <input type="hidden" name="id" id="id" value="<?php echo $cliente['id'] ?? ''; ?>">
             <label for="nome">Nome:</label>
             <input type="text" class="form-control" name="nome" id="nome" required value="<?php echo isset($_GET['nome']) ? htmlspecialchars(urldecode($_GET['nome'])) : '';
                                                                                             echo $cliente['nome'] ?? ''; ?>">

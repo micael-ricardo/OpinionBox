@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../services/cliente/InsertCliente.php';
 require_once __DIR__ . '/../services/cliente/ListClientes.php';
+require_once __DIR__ . '/../services/cliente/UpdatCliente.php';
 
 function validarDados($dados)
 {
@@ -53,17 +54,32 @@ if (!empty($erros)) {
 
 $dados = tratarDados($_POST);
 
-$service = new InsertCliente();
-
-try {
-    $service->insertClientes($dados['nome'], $dados['cpf'], $dados['cep'], $dados['estado'], $dados['cidade'], $dados['bairro'], $dados['rua'], $dados['numero']);
-    header('Location: ../public/Listar.php?message=' . urlencode('Cadastrado com sucesso'));
-    exit();
-} catch (Exception $e) {
-    header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage())
-        . '&nome=' . urlencode($_POST['nome']) . '&cpf=' . urlencode($_POST['cpf'])
-        . '&cep=' . urlencode($_POST['cep']) . '&estado=' . urlencode($_POST['estado'])
-        . '&cidade=' . urlencode($_POST['cidade']) . '&bairro=' . urlencode($_POST['bairro'])
-        . '&rua=' . urlencode($_POST['rua']) . '&numero=' . urlencode($_POST['numero']));
-    exit();
+if (isset($_POST['id']) && !empty($_POST['id'])) {
+    $service = new UpdatCliente();
+    try {
+        $service->updateCliente($_POST['id'], $dados['nome'], $dados['cpf'], $dados['cep'], $dados['estado'], $dados['cidade'], $dados['bairro'], $dados['rua'], $dados['numero']);
+        header('Location: ../public/Listar.php?message=' . urlencode('Atualizado com sucesso'));
+        exit();
+    } catch (Exception $e) {
+        header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao atualizar cliente: ' . $e->getMessage())
+            . '&nome=' . urlencode($_POST['nome']) . '&cpf=' . urlencode($_POST['cpf'])
+            . '&cep=' . urlencode($_POST['cep']) . '&estado=' . urlencode($_POST['estado'])
+            . '&cidade=' . urlencode($_POST['cidade']) . '&bairro=' . urlencode($_POST['bairro'])
+            . '&rua=' . urlencode($_POST['rua']) . '&numero=' . urlencode($_POST['numero']));
+        exit();
+    }
+} else {
+    $service = new InsertCliente();
+    try {
+        $service->insertClientes($dados['nome'], $dados['cpf'], $dados['cep'], $dados['estado'], $dados['cidade'], $dados['bairro'], $dados['rua'], $dados['numero']);
+        header('Location: ../public/Listar.php?message=' . urlencode('Cadastrado com sucesso'));
+        exit();
+    } catch (Exception $e) {
+        header('Location: ../public/Cadastro.php?error=' . urlencode('Erro ao inserir cliente: ' . $e->getMessage())
+            . '&nome=' . urlencode($_POST['nome']) . '&cpf=' . urlencode($_POST['cpf'])
+            . '&cep=' . urlencode($_POST['cep']) . '&estado=' . urlencode($_POST['estado'])
+            . '&cidade=' . urlencode($_POST['cidade']) . '&bairro=' . urlencode($_POST['bairro'])
+            . '&rua=' . urlencode($_POST['rua']) . '&numero=' . urlencode($_POST['numero']));
+        exit();
+    }
 }
