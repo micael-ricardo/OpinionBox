@@ -37,7 +37,8 @@ $clientes = $listClientes->getAllClientes();
                 <td><?php echo htmlspecialchars($cliente['cpf']); ?></td>
                 <td><?php echo htmlspecialchars($cliente['cep']); ?></td>
                 <td>
-                    <a href="Editar.php?id=<?php echo $cliente['id']; ?>" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
+                    
+                    <a href="Cadastro.php?id=<?php echo $cliente['id']; ?>" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
                     <button type="button" data-id="<?php echo $cliente['id']; ?>" class="btn btn-danger btn-sm excluir-candidato"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
