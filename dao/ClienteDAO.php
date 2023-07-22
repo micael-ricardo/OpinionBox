@@ -13,7 +13,11 @@ class ClienteDAO
 
     public function getAllClientes(): array
     {
-        $stmt = $this->conexao->prepare("SELECT * FROM clientes");
+
+        $stmt = $this->conexao->prepare("SELECT c.id, c.nome, c.cpf, ce.cep, e.rua, e.numero, e.cidade, e.estado
+        FROM clientes c
+        JOIN enderecos e ON c.id = e.id_cliente
+        JOIN ceps ce ON e.id_cep = ce.id;");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -58,7 +62,6 @@ class ClienteDAO
             $stmt->bindParam(':estado', $estado);
             $stmt->execute();
             $this->conexao->commit();
-
         } catch (Exception $e) {
             $this->conexao->rollBack();
             throw new Exception('Erro ao inserir cliente: ' . $e->getMessage());

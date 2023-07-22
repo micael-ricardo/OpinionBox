@@ -6,6 +6,8 @@ if (isset($_GET['error'])) {
 }
 ?>
 
+<h1 class="display-6">Cadastro de Clientes</h1>
+
 <form action="../controllers/ClienteController.php" method="post">
     <div class="row mt-4">
         <div class="form-group col-md-6">
