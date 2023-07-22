@@ -24,6 +24,7 @@ $(document).ready(function () {
             });
     });
 });
+
 function exibirEndereco(endereco) {
 
     $("#bairro").val(endereco.bairro);

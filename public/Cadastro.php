@@ -70,4 +70,4 @@ $conteudo = ob_get_clean();
 include 'template/layout.php';
 ?>
 
-<script src="../public/js/cliente.js"></script>
+<script src="../public/js/Cliente.js"></script>
