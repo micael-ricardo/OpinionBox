@@ -126,10 +126,17 @@ class ClienteDAO
         }
     }
 
-    public function deleteUser($id)
+    public function deleteCliente($id)
     {
-      $stmt = $this->conexao->prepare("DELETE FROM usuarios WHERE id = :id");
-      $stmt->bindParam(':id', $id);
-      $stmt->execute();
+      try {
+        $this->conexao->beginTransaction();
+        $stmt = $this->conexao->prepare("DELETE FROM clientes WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $this->conexao->commit();
+      } catch (Exception $e) {
+        $this->conexao->rollBack();
+        throw new Exception('Erro ao deletar usuário: ' . $e->getMessage());
+      }
     }
 }

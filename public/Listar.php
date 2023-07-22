@@ -57,7 +57,8 @@ $clientes = $listClientes->getAllClientes();
                 não pode ser desfeita.
             </div>
             <div class="modal-footer">
-                <form id="formExcluir" method="post">
+                <form id="formExcluir" method="post" action="../controllers/ClienteController.php">
+                    <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="id">
                     <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</button>
                 </form>
@@ -78,5 +79,36 @@ include 'template/layout.php';
         var nome = $(this).data('nome');
         $('#nome-usuario').text(nome);
         $('#formExcluir input[name="id"]').val(id);
+    });
+
+    $(document).on("submit", "#formExcluir", function(e) {
+        e.preventDefault();
+        var form = this;
+
+        function showError() {
+            toastr.error('Ocorreu um erro ao excluir a candidato.');
+        }
+        $.ajax({
+            url: $(form).attr('action'),
+            type: form.method,
+            data: $(form).serialize(),
+            success: function(response, status, xhr) {
+                if (xhr.status === 200) {
+                    toastr.success('Candidato excluída com sucesso!');
+                    $('#ModalDeletar').modal('hide');
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    showError();
+                }
+            },
+            error: function(xhr) {
+                showError();
+            },
+            complete: function() {
+                $('#ModalDeletar').modal('hide');
+            }
+        });
     });
 </script>
