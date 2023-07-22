@@ -7,9 +7,7 @@ require_once __DIR__ . '/../services/cliente/DeletCliente.php';
 
 function deleteCliente($id)
 {
-    var_dump("Entrou");
     $service = new DeletCliente();
-    var_dump($service);
     try {
         $service->deleteCliente($id);
         header('Location: ../public/Listar.php?message=' . urlencode('Excluído com sucesso'));
