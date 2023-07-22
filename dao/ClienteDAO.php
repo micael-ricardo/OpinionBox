@@ -1,6 +1,6 @@
 <?php
-require_once '../config/Conexao.php';
-require_once '../utils/Util.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Opinion/config/Conexao.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/Opinion/utils/Util.php';
 
 class ClienteDAO
 {
