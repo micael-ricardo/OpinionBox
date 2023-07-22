@@ -139,4 +139,17 @@ class ClienteDAO
         throw new Exception('Erro ao deletar usuário: ' . $e->getMessage());
       }
     }
+
+    public function cepBairro(): array
+    {
+        $stmt = $this->conexao->prepare("SELECT b.nome_bairro, COUNT(ce.id) AS quantidade_ceps
+        FROM bairros b
+        LEFT JOIN ceps ce ON b.id = ce.id_bairro
+        GROUP BY b.nome_bairro;");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
 }
