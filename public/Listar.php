@@ -37,16 +37,46 @@ $clientes = $listClientes->getAllClientes();
                 <td><?php echo htmlspecialchars($cliente['cpf']); ?></td>
                 <td><?php echo htmlspecialchars($cliente['cep']); ?></td>
                 <td>
-                    
+
                     <a href="Cadastro.php?id=<?php echo $cliente['id']; ?>" class="btn btn-info btn-sm"><i class="bi bi-pencil"></i></a>
-                    <button type="button" data-id="<?php echo $cliente['id']; ?>" class="btn btn-danger btn-sm excluir-candidato"><i class="bi bi-trash"></i></button>
+                    <button type="button" data-bs-target="#ModalDeletar" data-bs-toggle="modal" data-id="<?php echo $cliente['id']; ?>" data-nome="<?php echo $cliente['nome']; ?>" class="btn btn-danger btn-sm excluir"><i class="bi bi-trash"></i></button>
                 </td>
             </tr>
         <?php endforeach; ?>
     </tbody>
 </table>
+<div class="modal fade" id="ModalDeletar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLabel">Excluir Cliente</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div id="modal-body" class="modal-body">
+                Tem certeza que deseja excluir Cliente: <b><span id="nome-usuario"> </span></b> ? Esta ação
+                não pode ser desfeita.
+            </div>
+            <div class="modal-footer">
+                <form id="formExcluir" method="post">
+                    <input type="hidden" name="id">
+                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i>Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 $conteudo = ob_get_clean();
 include 'template/layout.php';
 ?>
 <script src="../public/js/DataTable.js"></script>
+
+<script>
+    $('.excluir').on('click', function() {
+        var id = $(this).data('id');
+        var nome = $(this).data('nome');
+        $('#nome-usuario').text(nome);
+        $('#formExcluir input[name="id"]').val(id);
+    });
+</script>

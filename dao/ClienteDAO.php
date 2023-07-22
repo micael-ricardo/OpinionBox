@@ -125,4 +125,11 @@ class ClienteDAO
             throw new Exception('Erro ao atualizar cliente: ' . $e->getMessage());
         }
     }
+
+    public function deleteUser($id)
+    {
+      $stmt = $this->conexao->prepare("DELETE FROM usuarios WHERE id = :id");
+      $stmt->bindParam(':id', $id);
+      $stmt->execute();
+    }
 }
